@@ -20,6 +20,12 @@ import DesignServicesIcon from "@mui/icons-material/DesignServices";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
+const LogOut = () =>  { 
+  localStorage.clear();
+  window.location.reload();
+}
+
+
 
 function ToolBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -172,32 +178,32 @@ function ToolBar() {
                   marginTop: "5px",
                 }}
               >
-                  <DesignServicesIcon
-                    style={{ color: "#202020", fontSize: "30px" }}
-                  />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="#app-bar-with-responsive-menu"
-                    sx={{
-                      mr: 2,
-                      display: { xs: "none", md: "flex" },
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                      letterSpacing: ".3rem",
-                      color: "black",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Write
-                  </Typography>
+                <DesignServicesIcon
+                  style={{ color: "#202020", fontSize: "30px" }}
+                />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="#app-bar-with-responsive-menu"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    letterSpacing: ".3rem",
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Write
+                </Typography>
 
                 <NotificationsNoneIcon
                   style={{
                     color: "#202020",
                     fontSize: "30px",
-                    marginRight : "20px"
+                    marginRight: "20px",
                   }}
                 />
               </div>
@@ -224,7 +230,10 @@ function ToolBar() {
               >
                 {settings.map(setting => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
+                    <Typography
+                      sx={{ textAlign: "center" }}
+                      onClick={setting == "Logout" ?  LogOut : undefined} 
+                    >
                       {setting}
                     </Typography>
                   </MenuItem>

@@ -5,6 +5,7 @@ import SignUp from "../auth/SignUp";
 import MainLayout from "../Layouts/MainLayout";
 import ProtectedRoute from "../Layouts/ProtectedRoute";
 import { Navigate } from "react-router-dom";
+import ToolBar from "../components/Toolbar";
 
 function AppRoutes() {
   const [user, setUser] = React.useState(() => {
@@ -34,6 +35,7 @@ function AppRoutes() {
             path="/dashboard"
             element={
               <ProtectedRoute isAuthenticated={!!user}>
+                <ToolBar/>
                 <div>Dashboard</div>
               </ProtectedRoute>
             }
