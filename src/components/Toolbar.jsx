@@ -2,7 +2,7 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";  
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,18 +16,16 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
-
-const pages = ["Products", "Pricing", "Blog"];
+import { useNavigate } from "react-router-dom";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const LogOut = () =>  { 
+const LogOut = () => {
   localStorage.clear();
   window.location.reload();
-}
-
-
+};
 
 function ToolBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -54,6 +52,8 @@ function ToolBar() {
     },
     marginLeft: 0,
     width: "100%",
+    color: "black ",
+
     display: "flex",
     justifyContent: "center",
     borderRadius: "50%",
@@ -73,7 +73,6 @@ function ToolBar() {
     alignItems: "center",
     justifyContent: "center",
   }));
-
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
@@ -101,7 +100,6 @@ function ToolBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -111,6 +109,7 @@ function ToolBar() {
                 color: "black",
                 textDecoration: "none",
               }}
+              onClick = {() => navigate("/")}
             >
               BLOG
             </Typography>
@@ -185,7 +184,6 @@ function ToolBar() {
                   variant="h6"
                   noWrap
                   component="a"
-                  href="#app-bar-with-responsive-menu"
                   sx={{
                     mr: 2,
                     display: { xs: "none", md: "flex" },
@@ -195,8 +193,9 @@ function ToolBar() {
                     color: "black",
                     textDecoration: "none",
                   }}
+                  onClick = {() => navigate("/createPost")}
                 >
-                  Write
+                    Write
                 </Typography>
 
                 <NotificationsNoneIcon
@@ -232,7 +231,7 @@ function ToolBar() {
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography
                       sx={{ textAlign: "center" }}
-                      onClick={setting == "Logout" ?  LogOut : undefined} 
+                      onClick={setting == "Logout" ? LogOut : undefined}
                     >
                       {setting}
                     </Typography>

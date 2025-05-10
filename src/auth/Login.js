@@ -112,7 +112,7 @@ function Login() {
 
       if (response.data) {
         localStorage.setItem("user", JSON.stringify(response.data));
-        window.location.href = "/dashboard";
+        window.location.href = "/";
       } else {
         console.log("Sign-in failed. Please check your credentials.");
       }

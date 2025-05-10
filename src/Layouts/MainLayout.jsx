@@ -1,11 +1,13 @@
 import React from 'react'
-import { Outlet } from "react-router-dom";
-// import ToolBar from '../components/Toolbar';
+import { Outlet,useLocation } from "react-router-dom";
+import ToolBar from '../components/Toolbar';
 function MainLayout() {
+  const location = useLocation();
+  const hideTollbar = ["/login","/sign-in"].includes(location.pathname);
   return (
     <div>
-      {/* <ToolBar /> */}
       <main>
+        {!hideTollbar && <ToolBar />}
         <Outlet />
       </main>
     </div>

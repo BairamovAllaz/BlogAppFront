@@ -6,6 +6,7 @@ import MainLayout from "../Layouts/MainLayout";
 import ProtectedRoute from "../Layouts/ProtectedRoute";
 import { Navigate } from "react-router-dom";
 import ToolBar from "../components/Toolbar";
+import CreatePost from "../pages/CreatePost";
 
 function AppRoutes() {
   const [user, setUser] = React.useState(() => {
@@ -32,14 +33,14 @@ function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/sign-in" element={<SignUp />} />
           <Route
-            path="/dashboard"
+            path="/"
             element={
               <ProtectedRoute isAuthenticated={!!user}>
-                <ToolBar/>
                 <div>Dashboard</div>
               </ProtectedRoute>
             }
           />
+          <Route path="/createPost" element={<CreatePost />}></Route>
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
       </Routes>
