@@ -13,10 +13,11 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { handleSuccess, handleFailure } from "./GoogleAuth";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { AuthContext } from "../Context/AuthContext";
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Card = styled(MuiCard)(({ theme }) => ({
@@ -64,11 +65,12 @@ export const LoginContainer = styled(Stack)(({ theme }) => ({
 function Login() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
+  const navigate = useNavigate();
+  const { login } = React.useContext(AuthContext);
   const validateInputs = () => {
     let isValid = true;
 
@@ -110,9 +112,10 @@ function Login() {
         },
       });
 
-      if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        window.location.href = "/";
+      if (response.data.token) {
+        console.log(response.data.token)
+        login(response.data.token);
+        navigate("/")
       } else {
         console.log("Sign-in failed. Please check your credentials.");
       }
@@ -120,7 +123,6 @@ function Login() {
       console.error("Error:", error);
     }
   };
-
 
   return (
     <div>

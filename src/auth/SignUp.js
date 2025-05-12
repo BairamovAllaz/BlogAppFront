@@ -17,6 +17,7 @@ import axios from "axios";
 import { Card } from "./Login";
 import { LoginContainer } from "./Login";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -27,15 +28,13 @@ function SignUp() {
   const [lastName, setLastName] = React.useState("");
   const [firstNameError, setfirstNameError] = React.useState(false);
   const [firstNameErrorMessage, setfirstNameErrorMessage] = React.useState("");
-
   const [lastNameError, setlastNameError] = React.useState(false);
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState("");
-
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
-
+  const { signUp } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   const validateInputs = () => {
@@ -102,9 +101,8 @@ function SignUp() {
       });
 
       if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        console.log("User saved to localstorage");
-        window.location.href = "/dashboard";
+        signUp(response.data);
+        window.location.href = "/";
       } else {
         console.log("Sign-in failed. Please check your credentials.");
       }

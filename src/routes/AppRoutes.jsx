@@ -12,7 +12,7 @@ function AppRoutes() {
   const [user, setUser] = React.useState(() => {
     return JSON.parse(localStorage.getItem("user")) || null;
   });
- 
+
   React.useEffect(() => {
     const handleStorageChange = () => {
       const storedUser = localStorage.getItem("user");
@@ -30,18 +30,18 @@ function AppRoutes() {
     <div>
       <Routes>
         <Route element={<MainLayout />}>
+          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/sign-in" element={<SignUp />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute isAuthenticated={!!user}>
-                <div>Dashboard</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/createPost" element={<CreatePost />}></Route>
-          <Route path="*" element={<Navigate to="/login" />} />
+
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<div>Dashboard</div>} />
+            <Route path="/createPost" element={<CreatePost />} />
+          </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
         </Route>
       </Routes>
     </div>

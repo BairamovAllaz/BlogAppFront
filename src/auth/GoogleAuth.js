@@ -1,4 +1,6 @@
 import axios from "axios";
+import React from "react";
+//import { AuthContext } from "../Context/AuthContext";
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const decodeJWT = token => {
   const base64Url = token.split(".")[1];
@@ -10,8 +12,8 @@ export const handleFailure = error => {
   console.log("Google login error:", error);
 };
 
-
 export const handleSuccess = async response => {
+  //const { login } = React.useContext(AuthContext);
   const token = response.credential;
   const userData = decodeJWT(token);
   const data = {
@@ -27,7 +29,7 @@ export const handleSuccess = async response => {
     });
 
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      //login(response.data);
       window.location.href = "/dashboard";
     } else {
       console.log("Sign-in failed. Please check your credentials.");
@@ -36,4 +38,3 @@ export const handleSuccess = async response => {
     console.error("Error:", error);
   }
 };
-

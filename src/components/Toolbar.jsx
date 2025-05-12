@@ -17,18 +17,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const LogOut = () => {
-  localStorage.clear();
-  window.location.reload();
-};
 
 function ToolBar() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const {logout} = React.useContext(AuthContext);
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
   };
@@ -109,7 +106,7 @@ function ToolBar() {
                 color: "black",
                 textDecoration: "none",
               }}
-              onClick = {() => navigate("/")}
+              onClick={() => navigate("/")}
             >
               BLOG
             </Typography>
@@ -193,9 +190,9 @@ function ToolBar() {
                     color: "black",
                     textDecoration: "none",
                   }}
-                  onClick = {() => navigate("/createPost")}
+                  onClick={() => navigate("/createPost")}
                 >
-                    Write
+                  Write
                 </Typography>
 
                 <NotificationsNoneIcon
@@ -231,7 +228,7 @@ function ToolBar() {
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography
                       sx={{ textAlign: "center" }}
-                      onClick={setting == "Logout" ? LogOut : undefined}
+                      onClick={setting == "Logout" ? logout : undefined}
                     >
                       {setting}
                     </Typography>
