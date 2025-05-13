@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import ToolBar from "../components/Toolbar";
 import CreatePost from "../pages/CreatePost";
 import { AuthContext } from "../Context/AuthContext";
+import PostPreview from "../pages/PostPreview";
 
 function AppRoutes() {
 
@@ -25,6 +26,10 @@ function AppRoutes() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<div>Dashboard</div>} />
             <Route path="/createPost" element={<CreatePost />} />
+            <Route
+              path="/preview/:previewToken"
+              element={<PostPreview />}
+            />
           </Route>
 
           {/* Catch all */}

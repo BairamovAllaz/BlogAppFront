@@ -32,11 +32,6 @@ const ProtectedRoute = ({ children }) => {
     checkAuth();
   }, [setUser, logout]);
 
-  useEffect(() => {
-    if (user) {
-      console.log("User has been set:", user);
-    }
-  }, [user]);
 
 
   if (loading) {

@@ -5,27 +5,6 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const token = localStorage.getItem("token");
-  //     if (!token) return;
-
-  //     try {
-  //       const response = await axios.get(`${API_URL}/api/users/userData`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setUser(response.data);
-  //     } catch (err) {
-  //       console.error("Failed to fetch user", err);
-  //       logout();
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, []);
-
   const login = async userData => {
     try {
       
