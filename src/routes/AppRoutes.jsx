@@ -7,24 +7,11 @@ import ProtectedRoute from "../Layouts/ProtectedRoute";
 import { Navigate } from "react-router-dom";
 import ToolBar from "../components/Toolbar";
 import CreatePost from "../pages/CreatePost";
+import { AuthContext } from "../Context/AuthContext";
 
 function AppRoutes() {
-  const [user, setUser] = React.useState(() => {
-    return JSON.parse(localStorage.getItem("user")) || null;
-  });
 
-  React.useEffect(() => {
-    const handleStorageChange = () => {
-      const storedUser = localStorage.getItem("user");
-      setUser(storedUser ? JSON.parse(storedUser) : null);
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const  {user} = React.useContext(AuthContext);
 
   return (
     <div>
@@ -41,7 +28,7 @@ function AppRoutes() {
           </Route>
 
           {/* Catch all */}
-          <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </div>

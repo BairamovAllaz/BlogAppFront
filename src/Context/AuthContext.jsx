@@ -5,40 +5,52 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const token = localStorage.getItem("token");
+  //     if (!token) return;
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+  //     try {
+  //       const response = await axios.get(`${API_URL}/api/users/userData`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       setUser(response.data);
+  //     } catch (err) {
+  //       console.error("Failed to fetch user", err);
+  //       logout();
+  //     }
+  //   };
 
-      try {
-        const response = await axios.get(`${API_URL}/api/users/getUserData`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data);
-      } catch (err) {
-        console.error("Failed to fetch user", err);
-        logout();
-      }
-    };
-
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   const login = async userData => {
-    console.log("Token token: " , userData);
-    localStorage.setItem("token", userData);
     try {
-      const response = await axios.post(`${API_URL}/api/users/login`, {
+      
+      const response = await axios.post(
+        `${API_URL}/api/users/login`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      const userResponse = await axios.get(`${API_URL}/api/users/userData`, {
         headers: {
-          Authorization: `Bearer ${userData.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-      setUser(response.data);
+       console.log(userResponse.data);
+       setUser(userResponse.data);
+      window.location.href = "/";
     } catch (err) {
-      console.error("Failed to fetch user after login", err);
+      console.error("Login failed", err);
     }
   };
 
@@ -47,14 +59,14 @@ export const AuthProvider = ({ children }) => {
     window.location.href = "/";
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    window.location.href = "/login";
-  };
+    const logout = () => {
+      localStorage.removeItem("token"); 
+      setUser(null);
+      window.location.href = "/login";
+    };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, signUp }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, signUp }}>
       {children}
     </AuthContext.Provider>
   );

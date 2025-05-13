@@ -104,24 +104,7 @@ function Login() {
       email,
       password,
     };
-
-    try {
-      const response = await axios.post(`${API_URL}/api/users/login`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.data.token) {
-        console.log(response.data.token)
-        login(response.data.token);
-        navigate("/")
-      } else {
-        console.log("Sign-in failed. Please check your credentials.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    login(data);
   };
 
   return (
